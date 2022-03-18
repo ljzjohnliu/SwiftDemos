@@ -29,3 +29,10 @@ class NewsList: Codable {
     var next: Bool
     var list: [News]
 }
+
+extension NewsList {
+    var displayText: String {
+        let strings = list.map { $0.title }
+        return strings.joined(separator: "\n")
+    }
+}

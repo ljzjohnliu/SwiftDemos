@@ -37,8 +37,18 @@ class ViewController: UIViewController {
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 print(json)
-//                self.tv.text = json.object(forKey: "weatherinfo") as? String
-                self.tv.text = "获取到的天气信息是！！！"
+                guard let jsonData = try? JSONSerialization.data(withJSONObject: json, options: [])
+                else {
+                    fatalError("No JSON Data")
+                }
+                print("JSON Data:", jsonData)
+                guard let json2 = try? JSONDecoder().decode(WeatherAll.self, from: jsonData) else {
+                    fatalError("json2 error")
+                }
+                print("json2:", json)
+                
+////                self.tv.text = json.object(forKey: "weatherinfo") as? String
+//                self.tv.text = "获取到的天气信息是！！！"
             } catch {
                 print("无法连接到服务器")
                 return
